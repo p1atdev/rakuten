@@ -12,7 +12,7 @@ export class RakutenURL {
   }
 
   Endpoint(path: string) {
-    return new URL(`${this.url}${path}`);
+    return `${this.url}${path}`;
   }
 }
 

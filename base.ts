@@ -1,7 +1,6 @@
 import {
-  RakutenAPI,
   RakutenAPIClientError,
-  RakutenEnv,
+  RakutenAPIRequestError,
   RakutenURL,
 } from "./mod.ts";
 
@@ -15,9 +14,11 @@ const queryTemplate = {
 
 export type QueryOption = Record<string, unknown>;
 
+export type Result = Record<string, unknown>;
+
 export class API {
   readonly appId: string;
-  private readonly endpoint: URL;
+  private readonly endpoint: string;
 
   constructor({ appId, path }: { appId: string; path: string }) {
     this.appId = appId;
@@ -27,7 +28,7 @@ export class API {
   }
 
   async _get(query: Query) {
-    const url = this.endpoint;
+    const url = new URL(this.endpoint);
 
     url.searchParams.append("applicationId", this.appId);
 
@@ -43,34 +44,46 @@ export class API {
       }
     });
 
+    // TODO: comment out this line
     console.log(url.href);
 
     const res = await fetch(url.href);
 
     const json = await res.json();
 
+    switch (json.error) {
+      case undefined: {
+        break;
+      }
+      case "wrong_parameter": {
+        throw RakutenAPIRequestError.WrongParameter(json.error_description);
+      }
+      case "too_many_requests": {
+        throw RakutenAPIRequestError.TooManyRequests;
+      }
+      default: {
+        break;
+      }
+    }
+
     return json;
   }
 
   queryLeastCheck(options: QueryOption, least: string[]) {
-    const { needAtLeastOneIn } = options;
-    if (needAtLeastOneIn === undefined) {
-      return;
-    }
-
     const allEmpty = least.every((key) => {
       return Object.entries(options).find(([k, v]) =>
         k === key && v !== undefined
-      );
+      ) === undefined;
     });
+
     if (allEmpty) {
-      throw RakutenAPIClientError.PropertyMissing;
+      throw RakutenAPIClientError.PropertyMissing(least);
     }
   }
 
   appIdCheck() {
     if (this.appId === undefined) {
-      throw RakutenAPIClientError.NoApplicationId;
+      throw RakutenAPIClientError.InvalidApplicationId;
     }
   }
 }
