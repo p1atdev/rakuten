@@ -1,4 +1,4 @@
-import { API, Query, QueryOption, Result } from "../base.ts";
+import { API, Query, QueryOption, Result } from "../mod.ts";
 
 type Availability = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type AvailabilityText =

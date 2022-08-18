@@ -1,4 +1,4 @@
-import { API } from "../base.ts";
+import { API } from "../mod.ts";
 // import { RakutenEnv } from "../mod.ts";
 import { assertThrows } from "../deps.ts";
 

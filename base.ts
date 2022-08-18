@@ -3,6 +3,9 @@ import {
   RakutenAPIRequestError,
   RakutenURL,
 } from "./mod.ts";
+import { RakutenDev } from "./dev.ts";
+
+const dev = new RakutenDev();
 
 export type Query = Record<string, unknown>;
 
@@ -44,8 +47,7 @@ export class API {
       }
     });
 
-    // TODO: comment out this line
-    console.log(url.href);
+    dev.log(url.href);
 
     const res = await fetch(url.href);
 
