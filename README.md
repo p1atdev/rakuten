@@ -1,4 +1,4 @@
-# Deno template project
+# Rakuten API Client
 
 ![deno compatibility](https://shield.deno.dev/deno/^1.24)
 [![vr scripts](https://badges.velociraptor.run/flat.svg)](https://velociraptor.run)
