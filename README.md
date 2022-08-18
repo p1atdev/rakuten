@@ -1,46 +1,56 @@
 # Rakuten API Client
 
+[Rakuten API Client](https://webservice.rakuten.co.jp/documentation) for Deno
+
 ![deno compatibility](https://shield.deno.dev/deno/^1.24)
-[![vr scripts](https://badges.velociraptor.run/flat.svg)](https://velociraptor.run)
+[![deno module](https://shield.deno.dev/x/rakuten)](https://deno.land/x/rakuten])
+![Test](https://github.com/p1atdev/rakuten/actions/workflows/test.yaml/badge.svg)
 
-# Features
+> **Warning**
+> This project is currently in beta. There might still be breaking changes. Please be careful to use this.
 
--   VSCode extension setup for Deno
--   [Velociraptor](https://velociraptor.run/)
--   [Dockerfile](https://hub.docker.com/r/denoland/deno)
+# Supported Endpoints
+
+-   [ ] Ichiba
+-   [ ] Books
+    -   [x] Total
+    -   [ ] Book
+    -   [ ] CD
+    -   [ ] BooksDVD
+    -   [ ] ForeignBook
+    -   [ ] Magazine
+    -   [ ] Game
+    -   [ ] Software
+    -   [ ] Genre
+-   [ ] Travel
+-   [ ] Recipe
+-   [ ] Kobo
+-   [ ] GORA
 
 # Usage
 
-## GitHub Template
+First you have to get Application ID from [here](https://webservice.rakuten.co.jp/app/create) for free.
 
-[Create a repo from this template](https://github.com/p1atdev/deno_template/generate)
+## BooksTotal
 
-## Clone
+```ts
+import { RakutenAPI, RakutenEnv } from "https://deno.land/x/rakuten/mod.ts"
 
-```bash
-git clone https://github.com/p1atdev/deno_template my_deno_project
-```
+const client = new RakutenAPI(RakutenEnv.APP_ID!) // RakutenEnv.APP_ID loads RAKUTENN_APP_ID. Or you can pass your app id directly
 
-## Badges
+const res = await client.Books().Total().get({
+    keyword: "TypeScript",
+    hits: 3,
+})
 
--   Test workflow
+assertEquals(res.Items.length, 3)
 
-```md
-![Test](https://github.com/[your_name]/[your_repo_name]/actions/workflows/test.yml/badge.svg)
-```
+console.log(res.Items.map((i) => i.title)) // response type supported
 
--   Deno compatibility
-
-![deno compatibility](https://shield.deno.dev/deno/^1.24)
-
-```
-![deno compatibility](https://shield.deno.dev/deno/^1.24)
-```
-
--   Deno module
-
-[![deno module](https://shield.deno.dev/x/oak)](https://deno.land/x/oak])
-
-```md
-[![deno module](https://shield.deno.dev/x/oak)](https://deno.land/x/oak])
+// Output sample:
+// [
+//   "プロを目指す人のためのTypeScript入門　安全なコードの書き方から高度な型の使い方まで",
+//   "TypeScriptとReact/Next.jsでつくる実践Webアプリケーション開発",
+//   "プログラミングTypeScript"
+// ]
 ```
