@@ -3,7 +3,7 @@
 [Rakuten API Client](https://webservice.rakuten.co.jp/documentation) for Deno
 
 ![deno compatibility](https://shield.deno.dev/deno/^1.24)
-[![deno module](https://shield.deno.dev/x/rakuten)](https://deno.land/x/rakuten])
+[![deno module](https://shield.deno.dev/x/rakuten)](https://deno.land/x/rakuten)
 ![Test](https://github.com/p1atdev/rakuten/actions/workflows/test.yaml/badge.svg)
 
 > **Warning**
