@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "test": "deno test --allow-net --allow-env",
+        "test": "deno test --allow-net --allow-env --allow-read",
         "test:cov": "deno test -A --coverage=coverage && deno coverage ./coverage --lcov --output=coverage.lcov",
         "cache": "deno cache ./deps.ts"
     },
